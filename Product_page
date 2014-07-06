@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+ "http://www.w3.org/TR/html4/loose.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+<title>South African Sweets</title>
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		
+	</div>
+	<div id="border">
+		<div id="main">
+			<div id="left">
+				<div id="menu">
+					<ul>
+						<li><a href="choclates.php">Choclates</a></li>
+						<li><a href="biscuits.php">Biscuits</a></li>
+						<li><a href="chips.php">Chips</a></li>
+						<li><a href="tart.php">Tarts</a></li>
+						<br>
+						<li><a href="logIn.html">Login</a></li>
+						<?php //If the user is logged in display user links,if not display login links.
+						if ((isset($_COOKIE["user"])) and ($_COOKIE["set"]==1)){
+						echo "<li><a href=\"logout.php\">Log Out</a></li>"; 
+						echo "<br>";
+						echo "<li><a href=\"orders.php\">Orders</a></li>"; 
+						echo "<li><a href=\"account.php\">Account</a></li>"; 
+						echo "<li class=\"lastchild\"><a href=\"shoppingcart.php\">Shopping Cart</a></li>";
+						}else{ echo "<li class=\"lastchild\"><a href=\"register.html\">Register</a></li>";} ?>
+					</ul>
+				</div>
+				<div id="menubottom">
+					<ul>
+						<li><a href="index.php">Home</a></li>
+						<li><a href="about.html">About us</a></li>
+						<li><a href="mailto:&#115;&#101;&#114;&#117;&#110;&#111;&#120;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;?Subject=Hello">Contact</a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="right">
+				<div class="content">
+					
+					<?php
+					
+					error_reporting(0);
+						$intID=$_GET['id']; //Get the ID of product selected through the GET variable
+						
+						require_once("database2.php");
+
+						$dbProRecords = mysql_query("SELECT * FROM products WHERE PRO_ID='$intID'", $dbLocalhost)
+							or die("Problem reading table: " . mysql_error());
+						
+						//Display the product's information from the database
+						while ($arrProRecords = mysql_fetch_array($dbProRecords)) {
+							$strPicturePath = $arrProRecords["pro_picture"];
+							echo "<img src=\"$strPicturePath\" alt=\"Sweets\" /></a>" . "<br><br>";
+							echo "Product Name: ". $arrProRecords["PRO_NAME"] . "<br>";
+							echo "Description: " . $arrProRecords["PRO_DESCRIPT"] . "<br>";
+							echo "Price: $" . $arrProRecords["PRO_PRICE"] . "<br>";
+							echo "Weight(Grams): " . $arrProRecords["PRO_WEIGHT"] . "<br>";
+							echo "Expire Date: " . $arrProRecords["PRO_EXPIREDATE"] . "<br>";
+							echo "Amount in Stock: " . $arrProRecords["PRO_STOCKAMOUNT"] . "<br><br>";
+							//Link to add the product to the shopping cart with the ID passed along.
+							if ((isset($_COOKIE["user"])) and ($_COOKIE["set"]==1)){
+								echo "<form enctype=\"multipart/form-data\" action=\"buyF.php?id=$intID\" method=\"post\">";
+								echo "<table><tr><th>Select amount.</th></tr> ";
+								echo "<tr><td><input type=\"text\" name=\"amount\"></td></tr>";
+								echo "<tr><td><input type=\"submit\" name=\"submit\" value=\"Buy\">";
+								echo "</table>";
+								echo "</form> ";
+							} else {
+								echo "<a href=\"logIn.html\"><h4>Please Login </h4></a>" ."to add the item to your cart.". "<br><br>";
+							}
+						}
+						
+					?>
+				</div>
+				<div class="product">
+					
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div id="footer">
+		<div id="copyright">
+
+		</div>
+		<div id="payment"><img src="images/paypal.gif" alt="paypal" /></div>
+	</div>	
+	<div id="footerend"></div>
+</div>
+</body>
+</html>
