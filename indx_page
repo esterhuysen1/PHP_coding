@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+ "http://www.w3.org/TR/html4/loose.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+<title>South African Sweets</title>
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		
+	</div>
+	<div id="border">
+		<div id="main">
+			<div id="left">
+				<div id="menu">
+					<ul>
+						<li><a href="choclates.php">Choclates</a></li>
+						<li><a href="biscuits.php">Biscuits</a></li>
+						<li><a href="chips.php">Chips</a></li>
+						<li><a href="tart.php">Tarts</a></li>
+						<br>
+						<li><a href="logIn.html">Login</a></li>
+						<?php error_reporting(0);
+						//If the cookie from Log In is set, display logged on links.
+						if ((isset($_COOKIE["user"])) and ($_COOKIE["set"]==1)){ //Logged on links
+						echo "<li><a href=\"logout.php\">Log Out</a></li>"; 
+						echo "<br>";
+						echo "<li><a href=\"orders.php\">Orders</a></li>"; 
+						echo "<li><a href=\"account.php\">Account</a></li>"; 
+						echo "<li class=\"lastchild\"><a href=\"shoppingcart.php\">Shopping Cart</a></li>";
+						}else{ echo "<li class=\"lastchild\"><a href=\"register.html\">Register</a></li>";} //logged out links ?>
+					</ul>
+				</div>
+				<div id="menubottom">
+					<ul>
+						<li><a href="index.php">Home</a></li>
+						<li><a href="about.html">About us</a></li>
+						<li><a href="mailto:&#115;&#101;&#114;&#117;&#110;&#111;&#120;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;?Subject=Hello">Contact</a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="right">
+				<div class="content" style="background-image:url(images/welcome.gif); background-repeat:no-repeat;">
+				<?php	
+				error_reporting(0);
+				//If the cookie from Log In is set, stay on this page.If not,redirect to the login page.
+				if ((isset($_COOKIE["user"])) and ($_COOKIE["set"]==1)){
+					echo "<br><br><p>Welcome " . $_COOKIE["user"] . "!</p>";
+				}else{ echo "<h3>Welcome</h3><br>";}
+				if ((isset($_COOKIE["registerd"]))){
+					echo "<br><br><p>Registration Completed.<br> Welcome ".($_COOKIE["user"])."!</p>";
+				}
+				?>
+				<p>
+					Supplying quality South African sweets to New Zealand.
+					<br><br>
+					Please not this website is a prototype and not actually a store.<br>The website works completely,you can place an order but won't receive any goods.
+				</p>
+				</div>
+				<div class="product">
+					<h3>Products</h3>
+					<a href=""><img src="images/product1.gif" alt="product" /></a>
+					<a href=""><img src="images/product2.gif" alt="product" /></a>
+					<a href=""><img src="images/product3.gif" alt="product" /></a>
+					<a href=""><img src="images/product4.gif" alt="product" /></a>
+					<a href=""><img src="images/product5.gif" alt="product" /></a>
+					<a href=""><img src="images/product6.gif" alt="product" /></a>
+					<a href=""><img src="images/product7.gif" alt="product" /></a>
+					<a href=""><img src="images/product8.gif" alt="product" /></a>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div id="footer">
+		<div id="copyright">
+
+		</div>
+		<div id="payment"><img src="images/paypal.gif" alt="paypal" /></div>
+	</div>	
+	<div id="footerend"></div>
+</div>
+</body>
+</html>
