@@ -1,0 +1,62 @@
+<?php
+						require_once("database2.php");
+
+						if (isset($_POST['flag'])) {
+						
+						$dest="images/";
+            $tempfile  = $_FILES['userfile']['tmp_name'];
+            $userfile  = $_FILES['userfile']['name'];
+			$fileType = $_FILES['userfile']['type'];
+
+            // Destination file on server
+            $destfile = $dest . $userfile;
+
+            // Do we have an uploaded file?
+            if (is_uploaded_file($tempfile)) {
+            
+                 $intexist=1;
+                 $newname=basename($destfile,".$fileType");
+
+                
+                 
+                // Try and move uploaded file to local directory on server
+                if (!move_uploaded_file($tempfile, $destfile)) {
+                    echo 'Problem: Could not move to destination directory.<br>';
+                }
+            } else {
+                echo 'Possible file upload attack. Filename: '. $userfile."<br>";
+            }
+            echo 'File uploaded successfully.<br /><br />';
+
+						$strUsername=$_COOKIE["user"];
+						$recipe_record = mysql_query("SELECT * FROM user WHERE user_name='$strUsername'", $dbLocalhost)
+							or die("Problem reading table: " . mysql_error());
+						//Recipe name
+						$strRecipeName= strtolower($_POST['r_name']);
+						//Type of dish	
+						$strType= strtolower($_POST['type']);
+						
+						//Prepare Time
+						$strPrep= strtolower($_POST['prep_time']);
+
+						//Cook time
+						$strCook= strtolower($_POST['cook_time']);
+
+						//Ingredients
+						$strIngredients= strtolower($_POST['ingredients']);
+
+						//Method
+						$strMethod= strtolower($_POST['method']);
+						
+						$recipe_add = mysql_query("INSERT INTO recipe VALUES (NULL,'$strRecipeName','$strType', '$strPrep', '$strCook', '$strIngredients', '$strMethod' , '$newname', '$fileType')", $dbLocalhost)
+							or die("Problem reading table: " . mysql_error());
+						if($recipe_add){
+							//Sucessfull insert
+							echo "<p>Recipe Sucessfuly Added.</p>";
+						}else{
+							echo "<p>Error:Recipe not added.</p>";
+						}
+			
+						
+						}
+					?>
